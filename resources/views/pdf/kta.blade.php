@@ -43,10 +43,13 @@
             top: 0;
             left: 0;
             overflow: hidden;
-            background-image: url("{{ public_path('images/kta-front.png') }}");
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
+        }
+        .card-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8.56cm;
+            height: 5.398cm;
         }
         
         .content-container {
@@ -94,11 +97,6 @@
             line-height: 1.1;
             font-weight: bold;
         }
-        .member-id {
-            margin-bottom: 1.1mm;
-            font-size: 5.5pt;
-            line-height: 1.1;
-        }
         .info-table {
             width: 100%;
             table-layout: auto;
@@ -134,10 +132,6 @@
         .identity-compact .member-name {
             font-size: 6.8pt;
         }
-        .identity-compact .member-id {
-            font-size: 5pt;
-            margin-bottom: 0.5mm;
-        }
         .identity-compact .info-table td {
             font-size: 5.1pt;
             line-height: 1.05;
@@ -150,59 +144,17 @@
         .back-card {
             width: 8.56cm;
             height: 5.398cm;
-            padding: 0.3cm 0.45cm; /* Padding diperketat */
             position: absolute;
             top: 0;
             left: 0;
             overflow: hidden;
-            background-image: url("{{ public_path('images/bg.png') }}");
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
         }
-
-        .back-title {
-            text-align: center;
-            font-size: 11px;
-            font-weight: 900;
-            color: #1e3a8a;
-            text-transform: uppercase;
-            margin-bottom: 2px;
-            line-height: 1;
-        }
-
-        .back-subtitle {
-            text-align: center;
-            font-size: 7.5px;
-            font-weight: bold;
-            color: #334155;
-            margin-bottom: 5px;
-            line-height: 1;
-        }
-
-        .ikrar-list {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .ikrar-list li {
-            font-size: 6.3px; /* Dikecilkan dari 6.8px agar tidak memicu halaman ke-3 dan ke-4 */
-            line-height: 1.1;
-            color: #0f172a;
-            margin-bottom: 2px;
-            text-align: justify;
-            position: relative;
-            padding-left: 9px;
-        }
-
-        .ikrar-list li::before {
-            content: attr(data-num) ".";
+        .back-background {
             position: absolute;
-            left: 0;
             top: 0;
-            font-weight: bold;
-            color: #1e3a8a;
+            left: 0;
+            width: 8.56cm;
+            height: 5.398cm;
         }
         
     </style>
@@ -212,6 +164,7 @@
     <!-- HALAMAN 1: DEPAN -->
     <div class="page-break">
         <div class="card">
+            <img class="card-background" src="{{ public_path('images/kta-front.png') }}" alt="" width="1685" height="1063">
             <div class="content-container">
                 <div class="photo-box">
                     @if($alumni->foto && file_exists(public_path('storage/' . $alumni->foto)))
@@ -223,8 +176,12 @@
 
                 <div class="identity {{ mb_strlen($alumni->nama_lengkap.' '.$alumni->alamat_lengkap.' '.optional($alumni->korwil)->wilayah) > 140 ? 'identity-compact' : '' }}">
                     <h1 class="member-name">{{ $alumni->nama_lengkap }}</h1>
-                    <div class="member-id">ID Alumni: {{ str_pad($alumni->user_id ?? $alumni->id, 5, '0', STR_PAD_LEFT) }}</div>
                     <table class="info-table">
+                    <tr>
+                        <td class="label">ID Alumni</td>
+                        <td class="colon">:</td>
+                        <td class="value">{{ str_pad($alumni->user_id ?? $alumni->id, 5, '0', STR_PAD_LEFT) }}</td>
+                    </tr>
                     <tr>
                         <td class="label">TTL</td>
                         <td class="colon">:</td>
@@ -259,20 +216,7 @@
     <!-- HALAMAN 2: BELAKANG -->
     <div class="page-break" style="page-break-after: avoid;">
         <div class="back-card">
-            <div class="back-title">Ikrar Alumni</div>
-            <div class="back-subtitle">Kami, alumni Pondok Pesantren Haqqul Yaqin berikrar:</div>
-            
-            <ul class="ikrar-list">
-                <li data-num="1">Taat kepada Allah SWT dan Rasulullah SAW.</li>
-                <li data-num="2">Hormat dan ta'at kepada kiai dan seluruh guru-guru.</li>
-                <li data-num="3">Menjunjung tinggi nilai-nilai pesantren dan akhlak karimah.</li>
-                <li data-num="4">Senantiasa menjaga nama baik almamater.</li>
-                <li data-num="5">Berusaha menjadi tali perekat solidaritas antara sesama alumni.</li>
-                <li data-num="6">Menumbuhkan budaya ukhuwah, silaturrahmi serta saling membantu di antara alumni.</li>
-                <li data-num="7">Hidup mandiri dan tak menggantungkan hidup kepada orang lain.</li>
-                <li data-num="8">Berjasa sebanyak-banyaknya dan tidak mengharapkan serta tidak melupakan jasa orang.</li>
-                <li data-num="9">Dalam setiap langkah, hanya Allah tumpuan kami dan hanya ridho-Nya tujuan puncak kami.</li>
-            </ul>
+            <img class="back-background" src="{{ public_path('images/kta-back.png') }}" alt="" width="1685" height="1063">
         </div>
     </div>
 

@@ -53,7 +53,16 @@ class KtaPdfTest extends TestCase
             },
         ]]);
 
-        $pdf->output();
+        $output = $pdf->output();
+
+        $this->assertMatchesRegularExpression('/\/Subtype \/Image\s*\/Width 1685\s*\/Height 1063\b/', $output);
+        $this->assertGreaterThanOrEqual(4, preg_match_all('/\/Subtype \/Image\s*\/Width 1685\s*\/Height 1063\b/', $output));
+
+        $colons = array_values(array_filter($textBoxes, fn ($item) => trim($item[0]) === ':'));
+        $this->assertCount(5, $colons);
+        foreach ($colons as [, $box]) {
+            $this->assertEqualsWithDelta($colons[0][1][0], $box[0], 0.01);
+        }
 
         $this->assertSame(2, $pdf->getDomPDF()->getCanvas()->get_page_count());
         $this->assertNotEmpty($textBoxes);
